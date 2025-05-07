@@ -1,0 +1,776 @@
+{% extends "base.html" %}
+
+{% block title %}Fish Counter - Analysis History{% endblock %}
+
+{% block additional_css %}
+<style>
+    .history-header {
+        background: linear-gradient(135deg, #0d6efd, #0a58ca);
+        color: white;
+        padding: 2rem 0;
+        margin-top: -2rem;
+        margin-bottom: 2rem;
+        border-radius: 0 0 15px 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .stats-card {
+        border-radius: 10px;
+        background: white;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s;
+        height: 100%;
+        border: none;
+        padding: 1.5rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .stats-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 5px;
+        height: 100%;
+    }
+    
+    .stats-card:nth-child(1)::before {
+        background: linear-gradient(to bottom, #38b000, #008000);
+    }
+    
+    .stats-card:nth-child(2)::before {
+        background: linear-gradient(to bottom, #d90429, #ef233c);
+    }
+    
+    .stats-card:nth-child(3)::before {
+        background: linear-gradient(to bottom, #0d6efd, #0a58ca);
+    }
+    
+    .stats-card:nth-child(4)::before {
+        background: linear-gradient(to bottom, #6c757d, #495057);
+    }
+    
+    .stats-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .stats-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin: 0 auto 1rem;
+    }
+    
+    .stats-card:nth-child(1) .stats-icon {
+        background-color: rgba(56, 176, 0, 0.1);
+        color: #38b000;
+    }
+    
+    .stats-card:nth-child(2) .stats-icon {
+        background-color: rgba(217, 4, 41, 0.1);
+        color: #d90429;
+    }
+    
+    .stats-card:nth-child(3) .stats-icon {
+        background-color: rgba(13, 110, 253, 0.1);
+        color: #0d6efd;
+    }
+    
+    .stats-card:nth-child(4) .stats-icon {
+        background-color: rgba(108, 117, 125, 0.1);
+        color: #6c757d;
+    }
+    
+    .stats-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+    
+    .stats-card:nth-child(1) .stats-value {
+        color: #38b000;
+    }
+    
+    .stats-card:nth-child(2) .stats-value {
+        color: #d90429;
+    }
+    
+    .stats-card:nth-child(3) .stats-value {
+        color: #0d6efd;
+    }
+    
+    .stats-card:nth-child(4) .stats-value {
+        color: #6c757d;
+    }
+    
+    .stats-label {
+        font-size: 0.9rem;
+        color: #6c757d;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    .history-container {
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+        margin-bottom: 2rem;
+    }
+    
+    .chart-container {
+        height: 300px;
+        margin-bottom: 2rem;
+        position: relative;
+        width: 100%;
+        border: 1px solid #e9ecef;
+        border-radius: 10px;
+        padding: 10px;
+        background-color: white;
+    }
+    
+    .analysis-image {
+        width: 80px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 8px;
+        transition: transform 0.3s;
+    }
+    
+    .analysis-image:hover {
+        transform: scale(1.5);
+        z-index: 10;
+    }
+    
+    .fish-badge {
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 0.25rem 0.6rem;
+        border-radius: 20px;
+    }
+    
+    .table-responsive {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    
+    .table thead {
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    }
+    
+    .table th {
+        font-weight: 600;
+        color: #495057;
+        border: none;
+    }
+    
+    .btn-view {
+        border-radius: 20px;
+        font-size: 0.8rem;
+        padding: 0.25rem 0.75rem;
+    }
+    
+    .empty-state {
+        padding: 3rem;
+        text-align: center;
+    }
+    
+    .empty-icon {
+        font-size: 4rem;
+        color: #dee2e6;
+        margin-bottom: 1.5rem;
+    }
+    
+    /* Filter section */
+    .filter-section {
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- History Header -->
+<div class="history-header mb-4">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="mb-2">Analysis History</h1>
+                <p class="mb-0">View and analyze your past fish detection results</p>
+            </div>
+            <div class="col-lg-6 text-lg-end">
+                <a href="/analysis" class="btn btn-outline-light">
+                    <i class="fas fa-plus me-2"></i> New Analysis
+                </a>
+                <button class="btn btn-light ms-2" id="exportBtn">
+                    <i class="fas fa-download me-2"></i> Export Data
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    {% if analyses %}
+    <!-- Statistics Section -->
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+            <div class="stats-card animate__animated animate__fadeInUp">
+                <div class="stats-icon">
+                    <i class="fas fa-chart-bar"></i>
+                </div>
+                <div class="stats-value" id="totalAnalysesValue">{{ analyses|length }}</div>
+                <div class="stats-label">Total Analyses</div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="stats-card animate__animated animate__fadeInUp" style="animation-delay: 0.1s;">
+                <div class="stats-icon">
+                    <i class="fas fa-fish"></i>
+                </div>
+                <div class="stats-value" id="totalLiveFishValue">{{ analyses|sum(attribute='live_fish_count') }}</div>
+                <div class="stats-label">Live Fish</div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="stats-card animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+                <div class="stats-icon">
+                    <i class="fas fa-skull-crossbones"></i>
+                </div>
+                <div class="stats-value" id="totalDeadFishValue">{{ analyses|sum(attribute='dead_fish_count') }}</div>
+                <div class="stats-label">Dead Fish</div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="stats-card animate__animated animate__fadeInUp" style="animation-delay: 0.3s;">
+                <div class="stats-icon">
+                    <i class="fas fa-percentage"></i>
+                </div>
+                <div class="stats-value" id="healthRateValue">
+                    {% set total_fish = analyses|sum(attribute='live_fish_count') + analyses|sum(attribute='dead_fish_count') %}
+                    {% if total_fish > 0 %}
+                        {{ ((analyses|sum(attribute='live_fish_count') / total_fish) * 100)|round(1) }}%
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </div>
+                <div class="stats-label">Health Rate</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Visualization Section -->
+    <div class="history-container mb-4 animate__animated animate__fadeIn">
+        <h3 class="mb-3"><i class="fas fa-chart-line text-primary me-2"></i> Analysis Trends</h3>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="chart-container">
+                    <canvas id="fishCountChart"></canvas>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="chart-container">
+                    <canvas id="healthRateChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Filter Section -->
+    <div class="filter-section animate__animated animate__fadeIn">
+        <div class="row align-items-center">
+            <div class="col-md-9">
+                <div class="input-group">
+                    <span class="input-group-text bg-white">
+                        <i class="fas fa-search text-muted"></i>
+                    </span>
+                    <input type="text" class="form-control" id="searchInput" placeholder="Search by date or fish count...">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-filter me-1"></i> Filter
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#" data-filter="all">All Analyses</a></li>
+                        <li><a class="dropdown-item" href="#" data-filter="live">Live Fish Only</a></li>
+                        <li><a class="dropdown-item" href="#" data-filter="dead">Dead Fish Only</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" data-filter="last7">Last 7 Days</a></li>
+                        <li><a class="dropdown-item" href="#" data-filter="last30">Last 30 Days</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-3 text-md-end mt-3 mt-md-0">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-outline-secondary active" id="listViewBtn">
+                        <i class="fas fa-list"></i>
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary" id="gridViewBtn">
+                        <i class="fas fa-th"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- History Table -->
+    <div class="history-container animate__animated animate__fadeIn" id="listView">
+        <h3 class="mb-3"><i class="fas fa-history text-primary me-2"></i> Analysis History</h3>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Image</th>
+                        <th>Result</th>
+                        <th>Live Fish</th>
+                        <th>Dead Fish</th>
+                        <th>Total</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for analysis in analyses %}
+                    <tr>
+                        <td>{{ analysis.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <td>
+                            <img src="{{ url_for('uploaded_file', filename=analysis.result_image) }}" 
+                                 alt="Result image" class="analysis-image">
+                        </td>
+                        <td>
+                            {% if analysis.live_fish_count > 0 and analysis.dead_fish_count == 0 %}
+                                <span class="badge bg-success">All Healthy</span>
+                            {% elif analysis.live_fish_count == 0 and analysis.dead_fish_count > 0 %}
+                                <span class="badge bg-danger">All Dead</span>
+                            {% else %}
+                                <span class="badge bg-warning text-dark">Mixed</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <span class="fish-badge bg-success text-white">
+                                {{ analysis.live_fish_count }}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="fish-badge bg-danger text-white">
+                                {{ analysis.dead_fish_count }}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="fish-badge bg-primary text-white">
+                                {{ analysis.total_fish_count }}
+                            </span>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-primary btn-view" 
+                                   data-id="{{ analysis._id }}"
+                                   data-bs-toggle="modal" 
+                                   data-bs-target="#analysisModal">
+                                <i class="fas fa-eye me-1"></i> View
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <!-- Grid View (Hidden by default) -->
+    <div class="history-container animate__animated animate__fadeIn" id="gridView" style="display: none;">
+        <h3 class="mb-3"><i class="fas fa-th text-primary me-2"></i> Analysis Gallery</h3>
+        <div class="row">
+            {% for analysis in analyses %}
+            <div class="col-md-4 col-lg-3 mb-4">
+                <div class="card h-100">
+                    <img src="{{ url_for('uploaded_file', filename=analysis.result_image) }}" 
+                         class="card-img-top" alt="Analysis result">
+                    <div class="card-body">
+                        <h6 class="card-title">{{ analysis.timestamp.strftime('%Y-%m-%d %H:%M') }}</h6>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="fish-badge bg-success text-white">
+                                <i class="fas fa-fish me-1"></i> {{ analysis.live_fish_count }}
+                            </span>
+                            <span class="fish-badge bg-danger text-white">
+                                <i class="fas fa-skull-crossbones me-1"></i> {{ analysis.dead_fish_count }}
+                            </span>
+                            <span class="fish-badge bg-primary text-white">
+                                <i class="fas fa-calculator me-1"></i> {{ analysis.total_fish_count }}
+                            </span>
+                        </div>
+                        <button class="btn btn-sm btn-primary w-100 btn-view" 
+                               data-id="{{ analysis._id }}"
+                               data-bs-toggle="modal" 
+                               data-bs-target="#analysisModal">
+                            <i class="fas fa-eye me-1"></i> View Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <!-- Analysis Details Modal -->
+    <div class="modal fade" id="analysisModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Analysis Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-4">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-2">Loading analysis details...</p>
+                    </div>
+                    <div id="modalContent" style="display: none;">
+                        <!-- Content will be loaded dynamically -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="downloadBtn">
+                        <i class="fas fa-download me-1"></i> Download Report
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% else %}
+    <!-- Empty State -->
+    <div class="history-container empty-state animate__animated animate__fadeIn">
+        <div class="empty-icon">
+            <i class="fas fa-fish"></i>
+        </div>
+        <h3>No analyses yet</h3>
+        <p class="text-muted mb-4">You haven't performed any fish detection analyses yet.</p>
+        <a href="/analysis" class="btn btn-primary btn-lg">
+            <i class="fas fa-plus me-2"></i> Perform Your First Analysis
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block additional_js %}
+{% if analyses %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Animation for statistics numbers
+        const statValues = document.querySelectorAll('.stats-value');
+        statValues.forEach(element => {
+            const finalValue = element.textContent.trim();
+            if (!isNaN(parseFloat(finalValue))) {
+                const numericValue = parseFloat(finalValue.replace('%', ''));
+                element.textContent = '0';
+                
+                let currentValue = 0;
+                const increment = numericValue / 30;
+                
+                const timer = setInterval(() => {
+                    currentValue += increment;
+                    if (currentValue >= numericValue) {
+                        element.textContent = finalValue;
+                        clearInterval(timer);
+                    } else {
+                        if (finalValue.includes('%')) {
+                            element.textContent = currentValue.toFixed(1) + '%';
+                        } else {
+                            element.textContent = Math.floor(currentValue);
+                        }
+                    }
+                }, 30);
+            }
+        });
+        
+        // Get the analyses data from the server
+        const analysesData = {{ analyses|tojson }};
+        
+        // Ensure Chart.js is loaded before initializing charts
+        if (typeof Chart !== 'undefined') {
+            // Prepare data for charts
+            const dates = analysesData.map(a => {
+                const date = new Date(a.timestamp);
+                return date.toLocaleDateString();
+            });
+            
+            const liveFishCounts = analysesData.map(a => a.live_fish_count || 0);
+            const deadFishCounts = analysesData.map(a => a.dead_fish_count || 0);
+            const healthRates = analysesData.map(a => {
+                const total = (a.live_fish_count || 0) + (a.dead_fish_count || 0);
+                return total > 0 ? ((a.live_fish_count || 0) / total * 100).toFixed(1) : 0;
+            });
+            
+            // Make sure chart containers exist
+            const fishCountChartElem = document.getElementById('fishCountChart');
+            const healthRateChartElem = document.getElementById('healthRateChart');
+            
+            console.log("Initializing charts:", {
+                fishCountChartElem, 
+                healthRateChartElem, 
+                dates, 
+                liveFishCounts, 
+                deadFishCounts
+            });
+            
+            // Initialize fish count chart
+            if (fishCountChartElem) {
+                const fishCountChart = new Chart(
+                    fishCountChartElem,
+                    {
+                        type: 'bar',
+                        data: {
+                            labels: dates,
+                            datasets: [
+                                {
+                                    label: 'Live Fish',
+                                    data: liveFishCounts,
+                                    backgroundColor: 'rgba(56, 176, 0, 0.6)',
+                                    borderColor: 'rgba(56, 176, 0, 1)',
+                                    borderWidth: 1
+                                },
+                                {
+                                    label: 'Dead Fish',
+                                    data: deadFishCounts,
+                                    backgroundColor: 'rgba(217, 4, 41, 0.6)',
+                                    borderColor: 'rgba(217, 4, 41, 1)',
+                                    borderWidth: 1
+                                }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    text: 'Fish Count by Analysis'
+                                },
+                                legend: {
+                                    position: 'top',
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Fish Count'
+                                    }
+                                }
+                            }
+                        }
+                    }
+                );
+            } else {
+                console.error("Fish count chart element not found");
+            }
+            
+            // Initialize health rate chart
+            if (healthRateChartElem) {
+                const healthRateChart = new Chart(
+                    healthRateChartElem,
+                    {
+                        type: 'line',
+                        data: {
+                            labels: dates,
+                            datasets: [
+                                {
+                                    label: 'Health Rate (%)',
+                                    data: healthRates,
+                                    backgroundColor: 'rgba(13, 110, 253, 0.1)',
+                                    borderColor: 'rgba(13, 110, 253, 1)',
+                                    borderWidth: 2,
+                                    fill: true,
+                                    tension: 0.4
+                                }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    text: 'Fish Health Rate Trend'
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    max: 100,
+                                    title: {
+                                        display: true,
+                                        text: 'Health Rate (%)'
+                                    }
+                                }
+                            }
+                        }
+                    }
+                );
+            }
+        } else {
+            console.error('Chart.js library not loaded');
+        }
+        
+        // View toggle functionality
+        const listViewBtn = document.getElementById('listViewBtn');
+        const gridViewBtn = document.getElementById('gridViewBtn');
+        const listView = document.getElementById('listView');
+        const gridView = document.getElementById('gridView');
+        
+        listViewBtn.addEventListener('click', function() {
+            listView.style.display = 'block';
+            gridView.style.display = 'none';
+            listViewBtn.classList.add('active');
+            gridViewBtn.classList.remove('active');
+        });
+        
+        gridViewBtn.addEventListener('click', function() {
+            listView.style.display = 'none';
+            gridView.style.display = 'block';
+            gridViewBtn.classList.add('active');
+            listViewBtn.classList.remove('active');
+        });
+        
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('keyup', function() {
+            const searchTerm = this.value.toLowerCase();
+            const tableRows = document.querySelectorAll('table tbody tr');
+            const gridItems = document.querySelectorAll('#gridView .col-md-4');
+            
+            // Filter table rows
+            tableRows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+            
+            // Filter grid items
+            gridItems.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                item.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        });
+        
+        // Handle modal view
+        const viewButtons = document.querySelectorAll('.btn-view');
+        viewButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const analysisId = this.getAttribute('data-id');
+                // In a real application, you'd fetch the details from the server
+                // For now, we'll just show a placeholder
+                
+                setTimeout(() => {
+                    document.querySelector('#modalContent').innerHTML = `
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <h5>Original Image</h5>
+                                <img src="${this.closest('tr') ? 
+                                    this.closest('tr').querySelector('.analysis-image').src : 
+                                    this.closest('.card').querySelector('.card-img-top').src}" 
+                                     class="img-fluid rounded" alt="Original image">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <h5>Detection Results</h5>
+                                <img src="${this.closest('tr') ? 
+                                    this.closest('tr').querySelector('.analysis-image').src : 
+                                    this.closest('.card').querySelector('.card-img-top').src}" 
+                                     class="img-fluid rounded" alt="Result image">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <div class="stats-card">
+                                    <div class="stats-icon">
+                                        <i class="fas fa-fish"></i>
+                                    </div>
+                                    <div class="stats-value">${this.closest('tr') ? 
+                                        this.closest('tr').querySelector('td:nth-child(4)').textContent.trim() : 
+                                        this.closest('.card').querySelector('.fish-badge:nth-child(1)').textContent.trim()}</div>
+                                    <div class="stats-label">Live Fish</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="stats-card">
+                                    <div class="stats-icon">
+                                        <i class="fas fa-skull-crossbones"></i>
+                                    </div>
+                                    <div class="stats-value">${this.closest('tr') ? 
+                                        this.closest('tr').querySelector('td:nth-child(5)').textContent.trim() : 
+                                        this.closest('.card').querySelector('.fish-badge:nth-child(2)').textContent.trim()}</div>
+                                    <div class="stats-label">Dead Fish</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="stats-card">
+                                    <div class="stats-icon">
+                                        <i class="fas fa-calculator"></i>
+                                    </div>
+                                    <div class="stats-value">${this.closest('tr') ? 
+                                        this.closest('tr').querySelector('td:nth-child(6)').textContent.trim() : 
+                                        this.closest('.card').querySelector('.fish-badge:nth-child(3)').textContent.trim()}</div>
+                                    <div class="stats-label">Total Fish</div>
+                                </div>
+                            </div>
+                        </div>
+                        <h5 class="mb-3">Detection Details</h5>
+                        <div class="table-responsive">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Type</th>
+                                        <th>Confidence</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td><span class="badge bg-success">Live Fish</span></td>
+                                        <td>95.2%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td><span class="badge bg-success">Live Fish</span></td>
+                                        <td>92.8%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td><span class="badge bg-danger">Dead Fish</span></td>
+                                        <td>88.5%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    `;
+                    
+                    document.querySelector('#modalContent').style.display = 'block';
+                    document.querySelector('#analysisModal .spinner-border').parentElement.style.display = 'none';
+                }, 1000);
+            });
+        });
+        
+        // Export data functionality
+        document.getElementById('exportBtn').addEventListener('click', function() {
+            alert('Export functionality would be implemented here. This would generate a CSV or Excel file with all analysis data.');
+        });
+        
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            alert('Download functionality would be implemented here. This would generate a PDF report for the specific analysis.');
+        });
+    });
+</script>
+{% endif %}
+{% endblock %} 

@@ -1,0 +1,114 @@
+/* Main CSS styles for Fish Counter Application */
+
+/* Base styles */
+body {
+    padding-top: 2rem;
+    background: linear-gradient(135deg, #0d6efd20, #0dcaf020);
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Navigation */
+.navbar {
+    background-color: #0077b6;
+}
+.navbar-brand, .nav-link {
+    color: white;
+}
+.nav-link:hover {
+    color: #caf0f8;
+}
+
+/* Container styles */
+.content-container {
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+.content-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+/* Titles and headings */
+.page-title {
+    text-align: center;
+    margin-bottom: 40px;
+    color: #084298;
+}
+.section-title {
+    color: #0d6efd;
+    margin-bottom: 25px;
+    text-align: center;
+    font-weight: 700;
+}
+
+/* Buttons */
+.btn-primary {
+    background: linear-gradient(135deg, #0d6efd, #0a58ca);
+    border: none;
+    transition: all 0.3s ease;
+}
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(13, 110, 253, 0.3);
+    background: linear-gradient(135deg, #0a58ca, #084298);
+}
+
+/* Wave background */
+.wave-bg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    z-index: -1;
+}
+.wave-bg svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 150px;
+    transform: rotateY(180deg);
+}
+.wave-bg .shape-fill {
+    fill: #FFFFFF;
+    opacity: 0.2;
+}
+
+/* Badges */
+.badge-beta {
+    font-size: 1rem;
+    padding: 5px 15px;
+    border-radius: 30px;
+    background-color: #17a2b8;
+    color: white;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+/* Form elements */
+.form-floating {
+    margin-bottom: 20px;
+}
+
+/* Loader */
+.loader {
+    display: none;
+    border: 5px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 5px solid #0d6efd;
+    width: 50px;
+    height: 50px;
+    margin: 20px auto;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+} 

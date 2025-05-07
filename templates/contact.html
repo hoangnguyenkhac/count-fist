@@ -1,0 +1,254 @@
+{% extends "base.html" %}
+
+{% block title %}Fish Counter - Contact Us{% endblock %}
+
+{% block additional_css %}
+<style>
+    .contact-hero {
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1575036578784-094a65a99abf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+        background-size: cover;
+        background-position: center;
+        color: white;
+        padding: 6rem 0 3rem;
+    }
+    
+    .contact-form {
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+        margin-top: -3rem;
+        position: relative;
+        z-index: 10;
+    }
+    
+    .contact-info-card {
+        border-radius: 10px;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s;
+        height: 100%;
+    }
+    
+    .contact-info-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .contact-icon {
+        width: 50px;
+        height: 50px;
+        background-color: #0d6efd;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .map-container {
+        height: 400px;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+</style>
+{% endblock %}
+
+{% block header %}
+<section class="contact-hero">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 fw-bold mb-4">Contact Us</h1>
+                <p class="lead mb-0">Get in touch with our team for any questions or inquiries</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="contact-form animate__animated animate__fadeIn mb-5">
+            <div class="row">
+                <div class="col-lg-5 mb-4 mb-lg-0">
+                    <h2 class="mb-4">Get In Touch</h2>
+                    <p class="mb-4">Have questions about our fish counting system? Need a custom solution for your aquaculture facility? Fill out the form, and our team will get back to you as soon as possible.</p>
+                    
+                    <div class="contact-info mb-4">
+                        <h4 class="mb-3">Contact Information</h4>
+                        <div class="row g-4">
+                            <div class="col-md-12">
+                                <div class="contact-info-card p-3">
+                                    <div class="contact-icon">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                    </div>
+                                    <h5>Address</h5>
+                                    <p class="mb-0">10 Huynh Van Nghe, Buu Long, Bien Hoa, Dong Nai</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="contact-info-card p-3">
+                                    <div class="contact-icon">
+                                        <i class="fas fa-phone"></i>
+                                    </div>
+                                    <h5>Phone</h5>
+                                    <p class="mb-0"><a href="tel:0353375507" class="text-decoration-none">0353375507</a></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="contact-info-card p-3">
+                                    <div class="contact-icon">
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
+                                    <h5>Email</h5>
+                                    <p class="mb-0"><a href="mailto:hoang.nk@share4happy.com" class="text-decoration-none">hoang.nk@share4happy.com</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <h4 class="mb-3">Follow Us</h4>
+                        <div class="d-flex gap-3">
+                            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-7">
+                    <div class="card border-0 bg-light">
+                        <div class="card-body p-4">
+                            <h3 class="mb-4">Send us a message</h3>
+                            
+                            <form action="/contact" method="post">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required>
+                                            <label for="name">Your Name</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <input type="email" class="form-control" id="email" name="email" placeholder="Your Email" required>
+                                            <label for="email">Your Email</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject" required>
+                                            <label for="subject">Subject</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-floating mb-3">
+                                            <textarea class="form-control" id="message" name="message" placeholder="Your Message" style="height: 150px" required></textarea>
+                                            <label for="message">Your Message</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="d-grid">
+                                            <button type="submit" class="btn btn-primary btn-lg">
+                                                <i class="fas fa-paper-plane me-2"></i>Send Message
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Map Section -->
+<div class="row justify-content-center mb-5">
+    <div class="col-lg-10">
+        <h2 class="mb-4">Our Location</h2>
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.209158809893!2d106.82992321531581!3d10.868521392249656!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174df0dd9e2cb7d%3A0xb02a0f388f9b9cc0!2zMTAgSHXhu7NuaCBWxINuIE5naOG7hywgQuG7rXUgTG9uZywgQmnDqm4gSMOyYSwgxJDhu5NuZyBOYWk!5e0!3m2!1sen!2s!4v1620123456789!5m2!1sen!2s" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </div>
+</div>
+
+<!-- FAQ Section -->
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="card border-0 bg-light p-4">
+            <div class="card-body">
+                <h2 class="mb-4">Frequently Asked Questions</h2>
+                
+                <div class="accordion" id="contactFaqAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="faqOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseOne" aria-expanded="true" aria-controls="faqCollapseOne">
+                                How quickly can I expect a response to my inquiry?
+                            </button>
+                        </h2>
+                        <div id="faqCollapseOne" class="accordion-collapse collapse show" aria-labelledby="faqOne" data-bs-parent="#contactFaqAccordion">
+                            <div class="accordion-body">
+                                Our team typically responds to all inquiries within 24-48 business hours. For urgent matters, we recommend giving us a call directly at the phone number provided.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="faqTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseTwo" aria-expanded="false" aria-controls="faqCollapseTwo">
+                                Do you offer on-site demos of the fish counting system?
+                            </button>
+                        </h2>
+                        <div id="faqCollapseTwo" class="accordion-collapse collapse" aria-labelledby="faqTwo" data-bs-parent="#contactFaqAccordion">
+                            <div class="accordion-body">
+                                Yes, we offer on-site demonstrations for commercial aquaculture facilities. Please contact us to schedule a demo at your location. We also provide virtual demos for clients who prefer a remote presentation.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="faqThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseThree" aria-expanded="false" aria-controls="faqCollapseThree">
+                                What kind of technical support do you provide?
+                            </button>
+                        </h2>
+                        <div id="faqCollapseThree" class="accordion-collapse collapse" aria-labelledby="faqThree" data-bs-parent="#contactFaqAccordion">
+                            <div class="accordion-body">
+                                We provide comprehensive technical support via email, phone, and remote assistance. Our support team is available during business hours, and premium support packages with extended hours are available for enterprise clients.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block additional_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Animate contact info cards when they come into view
+    const animateElements = function() {
+        const elements = document.querySelectorAll('.contact-info-card');
+        elements.forEach(element => {
+            const position = element.getBoundingClientRect();
+            if(position.top < window.innerHeight && position.bottom >= 0) {
+                element.classList.add('animate__animated', 'animate__fadeIn');
+            }
+        });
+    };
+    
+    window.addEventListener('scroll', animateElements);
+    animateElements(); // Run once on page load
+});
+</script>
+{% endblock %} 

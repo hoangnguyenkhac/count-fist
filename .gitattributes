@@ -1,0 +1,8 @@
+*.gitignore text
+*.python-version text
+*.pyproject.toml text
+*.uv.lock text
+*.py text
+*.txt text
+*.md text
+LICENSE text

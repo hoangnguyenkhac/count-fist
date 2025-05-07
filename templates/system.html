@@ -1,0 +1,372 @@
+{% extends "base.html" %}
+
+{% block title %}Fish Counter - System{% endblock %}
+
+{% block additional_css %}
+<style>
+    .system-hero {
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+        background-size: cover;
+        background-position: center;
+        color: white;
+        padding: 6rem 0 3rem;
+    }
+    
+    .tech-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: #0d6efd;
+    }
+    
+    .tech-card {
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+        height: 100%;
+    }
+    
+    .tech-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .component-card {
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        margin-bottom: 2rem;
+    }
+    
+    .component-img {
+        height: 200px;
+        object-fit: cover;
+    }
+    
+    .accordion-button:not(.collapsed) {
+        background-color: #e7f1ff;
+        color: #0d6efd;
+    }
+    
+    .spec-table th {
+        width: 30%;
+    }
+</style>
+{% endblock %}
+
+{% block header %}
+<section class="system-hero">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 fw-bold mb-4">Our System</h1>
+                <p class="lead mb-0">Advanced technology for precise fish counting and monitoring</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block content %}
+<!-- System Overview -->
+<section class="overview-section py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <h2 class="fw-bold mb-4">Fish Counter System Overview</h2>
+                <p class="lead text-primary mb-4">State-of-the-art AI-powered solution for aquaculture management</p>
+                <p>The Fish Counter system combines cutting-edge computer vision technology with deep learning algorithms to provide accurate fish counting and monitoring capabilities. Our system can identify and count both live and dead fish, helping aquaculture facilities optimize their operations and maintain healthy fish populations.</p>
+                <p>With both image-based analysis and real-time video processing capabilities, Fish Counter adapts to your specific needs, whether you're managing a small research tank or a large commercial fish farm.</p>
+                <div class="mt-4">
+                    <a href="/trial" class="btn btn-primary me-2">Try the System</a>
+                    <a href="/contact" class="btn btn-outline-primary">Contact Sales</a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <img src="https://images.unsplash.com/photo-1540126034813-121bf29033d2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
+                     alt="Fish Counter System" class="img-fluid rounded-3 shadow">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Technology Section -->
+<section class="technology-section py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Core Technologies</h2>
+            <p class="lead text-muted">Powered by cutting-edge AI and computer vision</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="tech-card card p-4 text-center">
+                    <div class="tech-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h4>Deep Learning</h4>
+                    <p>Our system uses YOLO (You Only Look Once) neural network architecture, trained on thousands of fish images to achieve high accuracy in various conditions.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="tech-card card p-4 text-center">
+                    <div class="tech-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h4>Computer Vision</h4>
+                    <p>Advanced image processing techniques enable our system to detect and classify fish even in challenging environments with varying lighting and water clarity.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="tech-card card p-4 text-center">
+                    <div class="tech-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h4>Data Analytics</h4>
+                    <p>Comprehensive data storage and analysis capabilities allow for tracking trends, generating reports, and optimizing your aquaculture operations.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- System Components -->
+<section class="components-section py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">System Components</h2>
+            <p class="lead text-muted">A comprehensive solution for fish monitoring</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="component-card">
+                    <img src="https://images.unsplash.com/photo-1520156557489-31c63271fcd4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
+                         alt="Image Analysis Module" class="component-img w-100">
+                    <div class="p-4">
+                        <h4>Image Analysis Module</h4>
+                        <p>Upload images or take photos directly through our interface. The system processes these images to provide accurate fish counts and classifications.</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Supports various image formats (JPEG, PNG)</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Built-in camera integration</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Quick processing time (5-10 seconds)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="component-card">
+                    <img src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
+                         alt="Real-time Monitoring" class="component-img w-100">
+                    <div class="p-4">
+                        <h4>Real-time Monitoring (Beta)</h4>
+                        <p>Connect cameras for continuous monitoring of fish populations. Get alerts and insights without manual intervention.</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Live video processing</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Automated alert system</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Time-lapse analysis</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="component-card">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
+                         alt="Data Management System" class="component-img w-100">
+                    <div class="p-4">
+                        <h4>Data Management System</h4>
+                        <p>Store, organize, and analyze historical data to track changes in fish populations and health over time.</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Secure cloud storage</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Historical trend analysis</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Custom reporting tools</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="component-card">
+                    <img src="https://images.unsplash.com/photo-1551135049-8a33b5883817?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
+                         alt="User Interface" class="component-img w-100">
+                    <div class="p-4">
+                        <h4>User Interface</h4>
+                        <p>Intuitive web interface accessible from any device, providing easy access to all system features.</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Responsive design for all devices</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i> User-friendly dashboard</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Role-based access control</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Technical Specifications -->
+<section class="specs-section py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Technical Specifications</h2>
+            <p class="lead text-muted">Detailed system capabilities and requirements</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Detection Capabilities</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table spec-table">
+                            <tbody>
+                                <tr>
+                                    <th>Fish Detection Accuracy</th>
+                                    <td>98.5% under optimal conditions</td>
+                                </tr>
+                                <tr>
+                                    <th>Classification Accuracy</th>
+                                    <td>95% for live/dead fish differentiation</td>
+                                </tr>
+                                <tr>
+                                    <th>Minimum Fish Size</th>
+                                    <td>0.5 cm (depending on image resolution)</td>
+                                </tr>
+                                <tr>
+                                    <th>Maximum Fish Density</th>
+                                    <td>Up to 200 fish per frame</td>
+                                </tr>
+                                <tr>
+                                    <th>Supported Species</th>
+                                    <td>Tilapia, Salmon, Trout, Carp, Catfish (more available upon request)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">System Requirements</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table spec-table">
+                            <tbody>
+                                <tr>
+                                    <th>Supported Platforms</th>
+                                    <td>Web-based (Chrome, Firefox, Safari, Edge)</td>
+                                </tr>
+                                <tr>
+                                    <th>Camera Requirements</th>
+                                    <td>Minimum 720p resolution, 1080p recommended</td>
+                                </tr>
+                                <tr>
+                                    <th>Internet Connection</th>
+                                    <td>5 Mbps minimum for real-time analysis</td>
+                                </tr>
+                                <tr>
+                                    <th>Storage</th>
+                                    <td>Cloud-based with unlimited storage for paid plans</td>
+                                </tr>
+                                <tr>
+                                    <th>Integration Options</th>
+                                    <td>REST API, CSV export, third-party aquaculture software</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="faq-section py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Frequently Asked Questions</h2>
+            <p class="lead text-muted">Common questions about our fish counting system</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                How accurate is the fish counting system?
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Under optimal conditions, our system achieves up to 98.5% accuracy for fish detection and 95% accuracy for classification (live/dead). Accuracy may vary based on water clarity, lighting conditions, fish density, and species.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Can the system work with any fish species?
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                The system is pre-trained on common aquaculture species including Tilapia, Salmon, Trout, Carp, and Catfish. For other species, we offer custom training solutions to adapt the system to your specific needs.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                How does the dead fish detection work?
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                The system uses a combination of posture analysis, color changes, and movement patterns (in video mode) to identify dead fish. Our AI has been trained on thousands of images of both live and dead fish to accurately distinguish between them.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingFour">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                Is an internet connection required?
+                            </button>
+                        </h2>
+                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Yes, our system operates as a web application and requires an internet connection for processing images and storing data in the cloud. For environments with limited connectivity, we do offer an on-premise solution. Please contact our sales team for more information.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingFive">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                Can I export the data to my existing management system?
+                            </button>
+                        </h2>
+                        <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Yes, Fish Counter offers data export in various formats including CSV, JSON, and Excel. We also provide a REST API for direct integration with third-party aquaculture management systems. Custom integration services are available for enterprise clients.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-primary text-white">
+    <div class="container text-center">
+        <h2 class="fw-bold mb-3">Ready to experience Fish Counter?</h2>
+        <p class="lead mb-4">Try our free trial version today or contact us for a personalized demo</p>
+        <div class="d-flex justify-content-center flex-wrap gap-3">
+            <a href="/trial" class="btn btn-light btn-lg">Try It Now</a>
+            <a href="/contact" class="btn btn-outline-light btn-lg">Request Demo</a>
+        </div>
+    </div>
+</section>
+{% endblock %} 

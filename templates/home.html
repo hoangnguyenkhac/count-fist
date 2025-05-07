@@ -1,0 +1,308 @@
+{% extends "base.html" %}
+
+{% block title %}Fish Counter - Home{% endblock %}
+
+{% block additional_css %}
+<style>
+    .hero-section {
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+        background-size: cover;
+        background-position: center;
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        color: white;
+        margin-top: -2rem;
+        padding-top: 4rem;
+    }
+    
+    .feature-card {
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+        height: 100%;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .feature-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+        color: #0d6efd;
+    }
+    
+    .stats-section {
+        background-color: #f8f9fa;
+    }
+    
+    .stat-item {
+        text-align: center;
+        padding: 2rem 0;
+    }
+    
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #0d6efd;
+    }
+    
+    .testimonial-card {
+        background-color: white;
+        border-radius: 10px;
+        padding: 2rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        height: 100%;
+    }
+    
+    .testimonial-img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+    
+    .cta-section {
+        background: linear-gradient(135deg, #0d6efd, #0a58ca);
+        color: white;
+    }
+</style>
+{% endblock %}
+
+{% block header %}
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7 animate__animated animate__fadeIn">
+                <h1 class="display-4 fw-bold mb-4">Advanced Fish Counting & Analysis</h1>
+                <p class="lead mb-4">Revolutionize your aquaculture operations with our AI-powered fish counting technology. Get accurate counts, identify dead fish, and optimize your yields.</p>
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="/trial" class="btn btn-primary btn-lg">Try It Now</a>
+                    <a href="/system" class="btn btn-outline-light btn-lg">Learn More</a>
+                </div>
+            </div>
+            <div class="col-lg-5 d-none d-lg-block animate__animated animate__fadeInRight">
+                <img src="https://images.unsplash.com/photo-1513040260736-63dd0617fb66?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
+                     alt="Fish counting system" class="img-fluid rounded-3 shadow-lg">
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block content %}
+<!-- Features Section -->
+<section class="features-section py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Why Choose Fish Counter?</h2>
+            <p class="lead text-muted">Our cutting-edge technology provides unmatched accuracy and efficiency</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="feature-card card p-4 text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h4>High Accuracy</h4>
+                    <p>Our AI system achieves over 98% accuracy in fish counting across various species and conditions.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="feature-card card p-4 text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-skull-crossbones"></i>
+                    </div>
+                    <h4>Dead Fish Detection</h4>
+                    <p>Automatically identify and count dead fish to monitor health conditions in your facility.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="feature-card card p-4 text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h4>Historical Data</h4>
+                    <p>Track and analyze historical counting data to identify trends and optimize your operations.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="feature-card card p-4 text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <h4>Cloud Storage</h4>
+                    <p>Securely store all your analysis results in the cloud for easy access from anywhere.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Statistics Section -->
+<section class="stats-section py-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="stat-item">
+                    <div class="stat-number">98.5%</div>
+                    <p class="mb-0">Accuracy Rate</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-item">
+                    <div class="stat-number">500+</div>
+                    <p class="mb-0">Facilities Using Our System</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-item">
+                    <div class="stat-number">10M+</div>
+                    <p class="mb-0">Fish Counted Daily</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-item">
+                    <div class="stat-number">20%</div>
+                    <p class="mb-0">Average Cost Reduction</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="how-it-works-section py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">How It Works</h2>
+            <p class="lead text-muted">Simple, efficient, and accurate fish counting in three easy steps</p>
+        </div>
+        
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <img src="https://images.unsplash.com/photo-1555443805-658637491dd4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
+                     alt="Fish counting process" class="img-fluid rounded-3 shadow">
+            </div>
+            <div class="col-lg-6">
+                <div class="steps-wrapper">
+                    <div class="d-flex mb-4">
+                        <div class="me-4">
+                            <div class="step-number bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" 
+                                 style="width: 50px; height: 50px; font-weight: bold; font-size: 1.25rem;">1</div>
+                        </div>
+                        <div>
+                            <h4>Capture Image</h4>
+                            <p>Upload an image or take a photo of your fish tank or pond using our system.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex mb-4">
+                        <div class="me-4">
+                            <div class="step-number bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" 
+                                 style="width: 50px; height: 50px; font-weight: bold; font-size: 1.25rem;">2</div>
+                        </div>
+                        <div>
+                            <h4>AI Analysis</h4>
+                            <p>Our advanced AI technology processes the image to detect and count fish with high accuracy.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex">
+                        <div class="me-4">
+                            <div class="step-number bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" 
+                                 style="width: 50px; height: 50px; font-weight: bold; font-size: 1.25rem;">3</div>
+                        </div>
+                        <div>
+                            <h4>Get Results</h4>
+                            <p>View detailed results including total count, live/dead fish ratio, and visual annotations.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials-section py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">What Our Clients Say</h2>
+            <p class="lead text-muted">Trusted by aquaculture professionals worldwide</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+                <div class="testimonial-card">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Client" class="testimonial-img me-3">
+                        <div>
+                            <h5 class="mb-0">John Smith</h5>
+                            <p class="text-muted mb-0">Aquaculture Manager</p>
+                        </div>
+                    </div>
+                    <p class="mb-0">"Fish Counter has transformed our operations. We've reduced manual counting errors by 95% and can now make data-driven decisions about our stock management."</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="testimonial-card">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Client" class="testimonial-img me-3">
+                        <div>
+                            <h5 class="mb-0">Sarah Johnson</h5>
+                            <p class="text-muted mb-0">Fish Farm Owner</p>
+                        </div>
+                    </div>
+                    <p class="mb-0">"The dead fish detection feature has been invaluable for monitoring health conditions in our tanks. We can now respond to issues much faster than before."</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="testimonial-card">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Client" class="testimonial-img me-3">
+                        <div>
+                            <h5 class="mb-0">Michael Chen</h5>
+                            <p class="text-muted mb-0">Research Scientist</p>
+                        </div>
+                    </div>
+                    <p class="mb-0">"As a researcher, I need accurate data. Fish Counter provides precisely that, with minimal setup and training time. The historical analysis features are especially useful."</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section py-5">
+    <div class="container text-center">
+        <h2 class="fw-bold mb-3">Ready to Revolutionize Your Fish Counting?</h2>
+        <p class="lead mb-4">Try our system today and experience the difference it can make to your aquaculture operations.</p>
+        <a href="/trial" class="btn btn-light btn-lg px-4">Start Free Trial</a>
+    </div>
+</section>
+{% endblock %}
+
+{% block additional_js %}
+<script>
+    // Animate elements when they come into view
+    document.addEventListener('DOMContentLoaded', function() {
+        const animateElements = function() {
+            const elements = document.querySelectorAll('.feature-card, .testimonial-card, .stat-item');
+            elements.forEach(element => {
+                const position = element.getBoundingClientRect();
+                if(position.top < window.innerHeight && position.bottom >= 0) {
+                    element.classList.add('animate__animated', 'animate__fadeIn');
+                }
+            });
+        };
+        
+        window.addEventListener('scroll', animateElements);
+        animateElements(); // Run once on page load
+    });
+</script>
+{% endblock %} 
