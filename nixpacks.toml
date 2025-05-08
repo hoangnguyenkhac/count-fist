@@ -1,8 +1,15 @@
 [phases.setup]
-nixFile = "shell.nix"  # Points to your custom shell.nix file
+# Install Python, pip, and required dependencies
+nixPkgs = ['python3', 'python3Packages.pip', 'libGL']
 
 [phases.install]
-cmds = ['pip install -r requirements.txt']  # This will now work with pip from nix
+# Run pip install to install dependencies from requirements.txt
+cmds = ['pip install -r requirements.txt']
+
+[phases.build]
+# Optionally, if you need to add build commands, you can do that here
+cmds = []
 
 [start]
+# The command to run your app after the build phase
 cmd = 'gunicorn app:app'
