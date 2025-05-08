@@ -1,15 +1,27 @@
 [phases.setup]
-# Install Python, pip, and required dependencies
-nixPkgs = ['python3', 'python3Packages.pip', 'libGL']
+# Install Python, pip, and system dependencies
+nixPkgs = [
+  "python3",
+  "python3Packages.pip",
+  "libGL",
+  "glib",
+  "pkg-config",
+  "ffmpeg",
+  "libjpeg",
+  "zlib"
+]
 
 [phases.install]
-# Run pip install to install dependencies from requirements.txt
-cmds = ['pip install -r requirements.txt']
+# Use python3 -m pip to avoid some PATH issues
+cmds = [
+  "python3 -m pip install --upgrade pip",
+  "python3 -m pip install -r requirements.txt"
+]
 
 [phases.build]
-# Optionally, if you need to add build commands, you can do that here
+# Leave empty unless you have build steps
 cmds = []
 
 [start]
-# The command to run your app after the build phase
-cmd = 'gunicorn app:app'
+# Entry point for the app
+cmd = "gunicorn app:app"
