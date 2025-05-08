@@ -8,6 +8,8 @@ A web application that allows users to upload images of fish and uses a YOLO mod
 - Automatic detection and counting of fish using a pre-trained YOLO model
 - Display of both original and processed images with detected fish
 - Real-time image preview before upload
+- User registration and authentication
+- History tracking of analyses
 
 ## Requirements
 
@@ -16,6 +18,7 @@ A web application that allows users to upload images of fish and uses a YOLO mod
 - Ultralytics 8.3.128 or higher
 - OpenCV
 - NumPy
+- MongoDB
 
 ## Installation
 
@@ -24,6 +27,7 @@ A web application that allows users to upload images of fish and uses a YOLO mod
 ```
 pip install -r requirements.txt
 ```
+3. Make sure you have MongoDB running locally or update the connection string in the code
 
 ## Usage
 
@@ -41,3 +45,26 @@ python app.py
 ## Model Information
 
 This application uses a YOLO model that was trained to detect fish. The model file is located in the `models` directory.
+
+## Deployment
+
+This application can be deployed using:
+
+- **Render** for the backend: Handles Python, Flask and the YOLO model
+- **Vercel** for the frontend: Serves the web interface
+
+For detailed deployment instructions, see [DEPLOYMENT.md](DEPLOYMENT.md)
+
+### Environment Variables
+
+When deploying, you'll need to set the following environment variables:
+
+- `MONGODB_URI`: Connection string for your MongoDB database
+- `FLASK_SECRET_KEY`: Secret key for Flask session encryption
+- `MODEL_URL`: URL to your YOLO model file in cloud storage (for cloud deployments)
+
+A sample `env.example` file is included to help you set up your environment.
+
+## License
+
+[MIT License](LICENSE)
