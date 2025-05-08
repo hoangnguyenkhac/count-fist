@@ -1,11 +1,8 @@
 [phases.setup]
-nixPkgs = ['libGL', 'python3', 'python3Packages.pip']
+nixFile = "shell.nix"  # Points to your custom shell.nix file
 
 [phases.install]
-cmds = ['pip install -r requirements.txt']
-
-[phases.build]
-cmds = []
+cmds = ['pip install -r requirements.txt']  # This will now work with pip from nix
 
 [start]
 cmd = 'gunicorn app:app'
