@@ -1,5 +1,4 @@
 [phases.setup]
-# Install Python, pip, and system dependencies
 nixPkgs = [
   "python3",
   "python3Packages.pip",
@@ -12,16 +11,13 @@ nixPkgs = [
 ]
 
 [phases.install]
-# Use python3 -m pip to avoid some PATH issues
 cmds = [
   "python3 -m pip install --upgrade pip",
   "python3 -m pip install -r requirements.txt"
 ]
 
 [phases.build]
-# Leave empty unless you have build steps
 cmds = []
 
 [start]
-# Entry point for the app
 cmd = "gunicorn app:app"
